@@ -1,3 +1,6 @@
+# Clean up intermediate files
+clean:
+	# No intermediate files to remove
 # Kyrgyzstan Admin Boundaries PMTiles Makefile
 
 SRC_ZIP_URL=https://data.humdata.org/dataset/693aca77-1252-4404-9045-785e43bb6846/resource/ec494f47-9c13-4f0d-a0e3-8c2b6c1e8777/download/kgz-administrative-divisions-geodatabase.zip
@@ -24,5 +27,5 @@ extract: $(SRC_ZIP)
 
 produce: $(SRC_GDB)
 	ogr2ogr -f GeoJSONSeq /vsistdout/ $(SRC_GDB) $(ADM1_LAYER) \
-	| jq -c '.properties |= {name_en: .admin1Name_en, name_ky: .admin1Name_ky, name_ru: .admin1Name_ru, pcode: .admin1Pcode, layer: "adm1", minzoom: 0, maxzoom: 6} | {type, properties, geometry}' \
-		| tippecanoe -o docs/ky1.pmtiles --force --read-parallel --layer=adm1 --minimum-zoom=0 --maximum-zoom=6 --attribution="Ministry of Emergency Situations of the Kyrgyz Republic / OCHA Middle East and North Africa (ROMENA)"
+	| ruby add_ja.rb /dev/stdin enja.tsv \
+	| tippecanoe -o docs/ky1.pmtiles --force --read-parallel --layer=adm1 --minimum-zoom=0 --maximum-zoom=6 --attribution="Ministry of Emergency Situations of the Kyrgyz Republic / OCHA Middle East and North Africa (ROMENA)"

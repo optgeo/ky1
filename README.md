@@ -1,8 +1,7 @@
+# Kyrgyzstan Administrative Boundaries PMTiles / キルギス行政境界PMTiles
 
-
-# Kyrgyzstan Administrative Boundaries PMTiles
+This repository provides a reproducible workflow to generate a PMTiles file (`docs/ky1.pmtiles`) of Kyrgyzstan's admin1 boundaries for web map publishing (e.g. GitHub Pages).
 このリポジトリは、キルギス共和国の第1レベル行政区画（州）境界データからPMTilesファイル（`docs/ky1.pmtiles`）を生成する再現可能なワークフローを提供します。GitHub Pages等でのWebマップ公開に利用できます。
-
 
 ## Workflow Overview / ワークフロー概要
 
@@ -16,21 +15,16 @@
 3. **Convert and filter attributes / 変換・属性整理**
    - Convert the layer `kgz_admbnda_adm1_moes_20181119` to GeoJSON Text Sequence using `ogr2ogr`.
    - `kgz_admbnda_adm1_moes_20181119` レイヤーを `ogr2ogr` でGeoJSON Text Sequenceに変換。
-   - Use `jq` to filter and rename properties:
-   - `jq` で属性を整理・リネーム：
-     - `admin1Name_en` → `name_en`
-     - `admin1Name_ky` → `name_ky`
-     - `admin1Name_ru` → `name_ru`
-     - `admin1Pcode`   → `pcode`
-     - Exclude unnecessary fields (e.g., `Shape_Length`, `Shape_Area`).
-     - 不要なフィールド（`Shape_Length`, `Shape_Area`等）は除外。
+   - Use a Ruby script to add Japanese names (name_ja) from `enja.tsv`.
+   - Rubyスクリプトで `enja.tsv` の日本語名（name_ja）を属性に追加。
+   - Only necessary properties are kept, and unnecessary fields are excluded.
+   - 必要な属性のみ抽出し、不要なフィールドは除外。
 4. **Generate PMTiles / PMTiles生成**
-   - Use `tippecanoe` to generate PMTiles from the filtered GeoJSON, outputting to `docs/ky1.pmtiles`.
+   - Use `tippecanoe` to generate PMTiles from the processed GeoJSON, outputting to `docs/ky1.pmtiles`.
    - 整理済みGeoJSONを `tippecanoe` でPMTiles化し、`docs/ky1.pmtiles` を出力。
 
 All steps are automated with the provided `Makefile`.
 すべての手順は `Makefile` で自動化されています。
-
 
 ## Usage / 使い方
 
@@ -38,8 +32,8 @@ All steps are automated with the provided `Makefile`.
 make download   # Download source data / ソースデータのダウンロード
 make extract    # Extract ZIP / ZIP展開
 make produce    # Generate docs/ky1.pmtiles / docs/ky1.pmtiles生成
+make clean      # Remove intermediate files / 中間ファイル削除
 ```
-
 
 ## Output / 出力
 
@@ -47,7 +41,6 @@ make produce    # Generate docs/ky1.pmtiles / docs/ky1.pmtiles生成
 - `docs/ky1.pmtiles`: キルギス行政区画（adm1）PMTilesファイル。Webホスティング対応。
 - [View in PMTiles Viewer (pmtiles.io)](https://pmtiles.io/?url=https://optgeo.github.io/ky1/ky1.pmtiles)
 - [PMTiles Viewer (pmtiles.io) で表示](https://pmtiles.io/?url=https://optgeo.github.io/ky1/ky1.pmtiles)
-
 
 ## License / ライセンス
 
@@ -61,14 +54,20 @@ make produce    # Generate docs/ky1.pmtiles / docs/ky1.pmtiles生成
 - The code and workflow in this repository are also released under [CC BY-IGO](https://creativecommons.org/licenses/by/3.0/igo/).
 - 本リポジトリのコード・ワークフローも [CC BY-IGO](https://creativecommons.org/licenses/by/3.0/igo/) ライセンスで公開します。
 
-
 ## References / 参考リンク
+
 - [Humanitarian Data Exchange: Kyrgyzstan - Administrative Boundaries](https://data.humdata.org/dataset/cod-ab-kgz)
+  - Kyrgyzstan行政境界データ（Humanitarian Data Exchange）
 - [PMTiles](https://github.com/protomaps/PMTiles)
+  - PMTiles（プロトマップス）
 - [tippecanoe](https://github.com/mapbox/tippecanoe)
+  - tippecanoe（Mapbox製ベクタタイル生成ツール）
 - [jq](https://stedolan.github.io/jq/)
+  - jq（JSONフィルタ・変換ツール）
 - [GDAL/ogr2ogr](https://gdal.org/programs/ogr2ogr.html)
+  - GDAL/ogr2ogr（地理データ変換ツール）
 
 ## Contact / お問い合わせ
+
 For questions or contributions, please open an issue or pull request.
 ご質問・提案はIssueまたはPull Requestでお知らせください。
