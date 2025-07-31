@@ -1,0 +1,6 @@
+# Ignore build artifacts and source data
+src/
+*.log
+*.tmp
+__pycache__/
+.DS_Store
