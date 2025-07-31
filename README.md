@@ -22,6 +22,8 @@ This repository provides a reproducible workflow to generate a PMTiles file (`do
 4. **Generate PMTiles / PMTiles生成**
    - Use `tippecanoe` to generate PMTiles from the processed GeoJSON, outputting to `docs/ky1.pmtiles`.
    - 整理済みGeoJSONを `tippecanoe` でPMTiles化し、`docs/ky1.pmtiles` を出力。
+   - Maximum zoom is set to 12 for detailed viewing.
+   - 最大ズームは12（詳細表示対応）。
 
 All steps are automated with the provided `Makefile`.
 すべての手順は `Makefile` で自動化されています。
@@ -31,14 +33,14 @@ All steps are automated with the provided `Makefile`.
 ```sh
 make download   # Download source data / ソースデータのダウンロード
 make extract    # Extract ZIP / ZIP展開
-make produce    # Generate docs/ky1.pmtiles / docs/ky1.pmtiles生成
+make produce    # Generate docs/ky1.pmtiles (maxzoom=12) / docs/ky1.pmtiles生成（最大ズーム12）
 make clean      # Remove intermediate files / 中間ファイル削除
 ```
 
 ## Output / 出力
 
-- `docs/ky1.pmtiles`: PMTiles file of Kyrgyzstan admin1 boundaries, suitable for web hosting.
-- `docs/ky1.pmtiles`: キルギス行政区画（adm1）PMTilesファイル。Webホスティング対応。
+- `docs/ky1.pmtiles`: PMTiles file of Kyrgyzstan admin1 boundaries (maxzoom=12), suitable for web hosting and detailed map viewing.
+- `docs/ky1.pmtiles`: キルギス行政区画（adm1）PMTilesファイル（最大ズーム12）。Webホスティング・詳細地図表示対応。
 - [View in PMTiles Viewer (pmtiles.io)](https://pmtiles.io/?url=https://optgeo.github.io/ky1/ky1.pmtiles)
 - [PMTiles Viewer (pmtiles.io) で表示](https://pmtiles.io/?url=https://optgeo.github.io/ky1/ky1.pmtiles)
 

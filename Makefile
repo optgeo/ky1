@@ -28,4 +28,4 @@ extract: $(SRC_ZIP)
 produce: $(SRC_GDB)
 	ogr2ogr -f GeoJSONSeq /vsistdout/ $(SRC_GDB) $(ADM1_LAYER) \
 	| ruby add_ja.rb /dev/stdin enja.tsv \
-	| tippecanoe -o docs/ky1.pmtiles --force --read-parallel --layer=adm1 --minimum-zoom=0 --maximum-zoom=6 --attribution="Ministry of Emergency Situations of the Kyrgyz Republic / OCHA Middle East and North Africa (ROMENA)"
+	| tippecanoe -o docs/ky1.pmtiles --force --read-parallel --layer=adm1 --minimum-zoom=0 --maximum-zoom=12 --attribution="Ministry of Emergency Situations of the Kyrgyz Republic / OCHA Middle East and North Africa (ROMENA)"
