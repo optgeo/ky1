@@ -2,6 +2,8 @@
 ## What you have / 利用ツール
 - tippecanoe
 - ogr2ogr
+- Ruby (for property mapping and Japanese name addition)
+- Ruby（属性マッピング・日本語名追加用）
 
 
 ## Objective / 目的
@@ -37,15 +39,21 @@
 
 - Automated all steps with Makefile (download, extract, produce targets)
 - 全工程をMakefileで自動化（download, extract, produceターゲット）
-- Explicit CLI pipeline: ogr2ogr → jq → tippecanoe
-- ogr2ogr→jq→tippecanoeのCLIパイプラインを明示
-- Renamed and filtered properties with jq (only name_en, name_ky, name_ru, pcode)
-- jqで属性名をリネーム（name_en, name_ky, name_ru, pcodeのみ抽出）
-- Enhanced README.md (steps, license, output, references, contact)
-- README.mdを詳細化（手順・ライセンス・成果物・参考リンク・問い合わせ）
+- Switched from jq to Ruby for robust property mapping (UNIX pipeline: ogr2ogr → ruby → tippecanoe)
+- jqからRubyに変更し堅牢な属性マッピングを実現（UNIXパイプライン: ogr2ogr→ruby→tippecanoe）
+- Added Japanese name mapping (name_ja) from enja.tsv using Ruby script (add_ja.rb)
+- Rubyスクリプト（add_ja.rb）でenja.tsvから日本語名（name_ja）をマッピング
+- Filtered properties to essential fields only (name_en, name_ky, name_ru, pcode, name_ja)
+- 必要な属性のみに絞り込み（name_en, name_ky, name_ru, pcode, name_ja）
+- Set maximum zoom to 12 for detailed map viewing
+- 詳細表示対応のため最大ズームを12に設定
+- Enhanced README.md and NOTES.md (bilingual documentation)
+- README.md・NOTES.mdを詳細化（バイリンガル文書）
 - Added pmtiles.io viewer URL ([PMTiles Viewer](https://pmtiles.io/?url=https://optgeo.github.io/ky1/ky1.pmtiles)) to README.md
 - pmtiles.ioビューワURL（[PMTiles Viewer](https://pmtiles.io/?url=https://optgeo.github.io/ky1/ky1.pmtiles)）をREADME.mdに追加
 - Clarified source data and repository license (CC BY-IGO)
 - ソースデータ・リポジトリのライセンス（CC BY-IGO）を明記
+- Eliminated intermediate files with direct UNIX pipeline (no .geojsonseq files)
+- 直接UNIXパイプラインで中間ファイルを排除（.geojsonseqファイル不要）
 - Output (docs/ky1.pmtiles) is ready for GitHub Pages hosting
 - 生成物（docs/ky1.pmtiles）はGitHub Pagesで公開可能
